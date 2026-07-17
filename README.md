@@ -34,3 +34,9 @@ An interactive 3D web experience exploring the duality of Batman and Bruce Wayne
 - **Vite:** Used as the build tool and development server for fast module replacement.
 - **Three.js:** Powers the 3D interactive graphics and visual effects rendered on the `<canvas>` elements.
 - **HTML/CSS/JS:** Vanilla web technologies structuring the content, styling the UI, and handling DOM interactions. The `main.js` script manages the 3D scene and interactions.
+
+## Credits
+- Developed by [@awaiz.dev](https://www.instagram.com/awaiz.dev) on Instagram.
+
+## Support
+If you like this project, please consider supporting by giving it a ⭐ on [GitHub](https://github.com/MDAwaiz438/Batman) and following [@awaiz.dev](https://www.instagram.com/awaiz.dev) on Instagram!
