@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Batman vs Joker — Secret Identity Reveal</title>
+    <meta name="description" content="An interactive superhero reveal experience featuring Batman and The Joker.">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+
+    <!-- ═══════════ LOADING SCREEN ═══════════ -->
+    <div id="loader" class="loader">
+      <canvas id="loading-canvas"></canvas>
+    </div>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <div class="hero" id="hero">
+
+      <canvas id="hero-canvas" class="hero-canvas"></canvas>
+
+      <!-- Navbar -->
+      <nav class="navbar" id="navbar">
+        <div class="nav-logo">
+          <svg class="nav-bat-icon" viewBox="0 0 726 252.17" fill="#fff" aria-hidden="true">
+            <path d="M483.92 0S481.38 24.71 466 40.11c-11.74 11.74-24.09 12.66-40.26 15.07-9.42 1.41-29.7 3.77-34.81-.79-2.37-2.11-3-21-3.22-27.62-.21-6.92-1.36-16.52-2.82-18-.75 3.06-2.49 11.53-3.09 13.61S378.49 34.3 378 36a85.13 85.13 0 0 0-30.09 0c-.46-1.67-3.17-11.48-3.77-13.56s-2.34-10.55-3.09-13.61c-1.45 1.45-2.61 11.05-2.82 18-.21 6.67-.84 25.51-3.22 27.62-5.11 4.56-25.38 2.2-34.8.79-16.16-2.47-28.51-3.39-40.21-15.13C244.57 24.71 242 0 242 0H0s69.52 22.74 97.52 68.59c16.56 27.11 14.14 58.49 9.92 74.73C170 140 221.46 140 273 158.57c69.23 24.93 83.2 76.19 90 93.6 6.77-17.41 20.75-68.67 90-93.6 51.54-18.56 103-18.59 165.56-15.25-4.21-16.24-6.63-47.62 9.93-74.73C656.43 22.74 726 0 726 0z"/>
+          </svg>
+          THE <span>BATMAN</span>
+        </div>
+        <ul class="nav-links">
+          <li>Gotham</li>
+          <li>Bruce Wayne</li>
+          <li>The Villains</li>
+          <li>The Mission</li>
+        </ul>
+      </nav>
+
+      <!-- Content panels -->
+      <div class="hero-content" id="hero-content">
+
+        <!-- Left panel — Batman -->
+        <div class="left">
+          <span class="st-eyebrow">Gotham City</span>
+          <h1 class="st-title">THE DARK<br/>KNIGHT</h1>
+          <p class="st-desc">
+            Vengeance courses through his veins. A symbol born from the
+            shadows — silent, relentless, unyielding. The night is his
+            weapon, and fear is his shield.
+          </p>
+          <button class="st-btn" id="btn-explore">Enter The Cave</button>
+        </div>
+
+        <!-- Right panel — Bruce Wayne -->
+        <div class="right">
+          <span class="st-eyebrow right-eyebrow">The Man Behind The Mask</span>
+          <h1 class="st-title">BRUCE<br/>WAYNE</h1>
+          <p class="st-text">
+            A billionaire socialite hiding in plain sight. Beneath the wealth and the charm lies a fractured soul, dedicating his life to a promise made in blood—to protect a city that breeds corruption.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════ DETAILED CONTENT SECTION (SCROLLABLE) ═══════════ -->
+    <section class="details-section" id="details">
+      <div class="details-container">
+        <h2 class="section-title">GOTHAM CITY FILES</h2>
+        <div class="cards-grid">
+          
+          <div class="file-card">
+            <div class="card-content">
+              <span class="card-tag gold">Vigilante</span>
+              <h3>BATMAN</h3>
+              <p class="alias">Bruce Wayne</p>
+              <p class="bio">Operating out of the Batcave beneath Wayne Manor, the vigilante known as Batman wages a one-man war on crime in Gotham City using his unmatched intellect, martial arts mastery, and advanced technological arsenal.</p>
+            </div>
+          </div>
+          
+          <div class="file-card">
+            <div class="card-content">
+              <span class="card-tag gold" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">Civilian</span>
+              <h3 style="color: #fff;">BRUCE WAYNE</h3>
+              <p class="alias">Billionaire Philanthropist</p>
+              <p class="bio">The CEO of Wayne Enterprises. To the public, he is a wealthy playboy without a care in the world. But in reality, his fortune and influence are the very things funding his secret war against the criminal underworld.</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

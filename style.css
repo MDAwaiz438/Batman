@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+/* ═══════════ TOKENS ═══════════ */
+:root {
+  --red:        #C0001A;
+  --red-glow:   rgba(192, 0, 26, 0.65);
+  --red-glow2:  rgba(192, 0, 26, 0.35);
+  --gold:       #D4A843;
+  --gold-glow:  rgba(212, 168, 67, 0.55);
+  --purple:     #6B2FA0;
+  --green:      #2ECC71;
+}
+
+/* ═══════════ RESET ═══════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: #000;
+  color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--red);
+}
+
+/* ═══════════ LOADING SCREEN ═══════════ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* The black screen that covers the page, designed to slide away */
+.loader::before {
+  content: "";
+  position: absolute;
+  top: -100%; left: -100%; right: -100%; bottom: -100%;
+  background: #000;
+  z-index: -1;
+  transform: translate(0, 0) rotate(35deg);
+  transition: transform 2.5s cubic-bezier(0.5, 0, 0.1, 1);
+}
+
+.loader.done {
+  pointer-events: none;
+}
+
+/* When the bats cross, the black screen chases their tail diagonally */
+.loader.done::before {
+  transform: translate(150%, -150%) rotate(35deg);
+}
+
+#loading-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* ═══════════ HERO ═══════════ */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero.visible {
+  opacity: 1;
+}
+
+/* red accent line at top */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), var(--gold), var(--red), transparent);
+  z-index: 10;
+}
+
+/* ═══════════ CANVAS ═══════════ */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* ═══════════ NAVBAR ═══════════ */
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 72px;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(192, 0, 26, 0.25);
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.navbar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Bangers', cursive;
+  font-size: 22px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+}
+
+.nav-bat-icon {
+  width: 36px;
+  height: auto;
+  fill: #fff;
+}
+
+.nav-logo span {
+  color: var(--red);
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links li {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.70);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+  pointer-events: all;
+}
+
+.nav-links li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 1.5px;
+  background: var(--red);
+  transition: width 0.35s ease;
+}
+
+.nav-links li:hover { color: #fff; }
+.nav-links li:hover::after { width: 100%; }
+
+/* ═══════════ HERO CONTENT ═══════════ */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.4s;
+}
+
+.hero-content.visible {
+  opacity: 1;
+}
+
+.hero-content .left,
+.hero-content .right {
+  pointer-events: all;
+}
+
+/* ── Left panel (Batman) ── */
+.left {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 10;
+}
+
+.st-eyebrow {
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.st-eyebrow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1.5px;
+  background: var(--gold);
+}
+
+.right-eyebrow {
+  color: var(--green);
+}
+
+.right-eyebrow::before {
+  background: var(--green);
+}
+
+.st-title {
+  font-family: 'Bangers', cursive;
+  font-size: 70px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-shadow:
+    3px 3px 0px #7A000F,
+    0 0 14px var(--red-glow),
+    0 0 32px var(--red-glow2);
+}
+
+.st-desc {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.01em;
+}
+
+.st-btn {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 15px;
+  background-color: transparent;
+  color: #fff;
+  border: 1.5px solid var(--red);
+  border-radius: 0;
+  cursor: pointer;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color 0.3s ease;
+}
+
+.st-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: translateX(-105%) skewX(-6deg);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.st-btn:hover { border-color: var(--red); }
+.st-btn:hover::after { transform: translateX(0) skewX(-6deg); }
+
+/* ── Right panel (Joker) ── */
+.right {
+  position: absolute;
+  bottom: 100px;
+  right: -50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 10;
+}
+
+.right::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: var(--green);
+  margin-bottom: -10px;
+}
+
+.right .st-title {
+  font-size: 60px;
+  width: 470px;
+  text-shadow:
+    3px 3px 0px #3D1A6E,
+    0 0 14px rgba(107, 47, 160, 0.65),
+    0 0 32px rgba(107, 47, 160, 0.35);
+}
+
+.st-text {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 300;
+  width: 400px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.01em;
+}
+
+/* ═══════════ DETAILS SECTION ═══════════ */
+.details-section {
+  background: #050505;
+  padding: 120px 60px;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  letter-spacing: 0.2em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--red);
+  margin: 15px auto 0 auto;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 40px;
+}
+
+.file-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.file-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Red glow for hover over Batman card */
+.file-card:first-child:hover {
+  border-color: var(--gold);
+  box-shadow: 0 10px 30px rgba(212, 168, 67, 0.15);
+}
+
+/* Green glow for hover over Joker card */
+.file-card:last-child:hover {
+  border-color: var(--green);
+  box-shadow: 0 10px 30px rgba(46, 204, 113, 0.15);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-tag {
+  align-self: flex-start;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.card-tag.gold {
+  background: rgba(212, 168, 67, 0.1);
+  color: var(--gold);
+  border: 1px solid rgba(212, 168, 67, 0.2);
+}
+
+.card-tag.green {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.file-card h3 {
+  font-family: 'Bangers', cursive;
+  font-size: 32px;
+  letter-spacing: 0.05em;
+}
+
+.file-card:first-child h3 {
+  color: var(--gold);
+}
+
+.file-card:last-child h3 {
+  color: var(--green);
+}
+
+.alias {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: -10px;
+}
+
+.bio {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
